@@ -1,0 +1,8 @@
+1. Treść zadania
+Stupid TOR. Komputery komunikują się w sieci, która za każdym razem wybiera losowo trasę.
+
+2. Opis protokołu komunikacji (np. za pomocą maszyny stanów, czy pseudokodu)
+
+3. Krótki opis plików źródłowych i ogólnie przyjętego modelu implementacji
+
+4. Krótka informacja dotycząca używania klienta i serwera (jak włączyć, jak wyłączyć, jak skompilować, wymagania)
