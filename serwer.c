@@ -92,6 +92,10 @@ int main(int argc, char* argv[])
          strcpy(cbBuf, tmpBuf);
          strcat(cbBuf, "\n");
 
+         /* rozszyfrowanie wiadomości */
+         encrypt(-key,cbBuf);
+         printf("Po rozszyfrowaniu: %s", cbBuf);
+
          /* odczytanie wiadomości */
          printf("Jestem końcowym serwerem! Twoja wiadomość do mnie to: \n%s\n", cbBuf);
        }

@@ -5,4 +5,24 @@ Stupid TOR. Komputery komunikują się w sieci, która za każdym razem wybiera 
 
 3. Krótki opis plików źródłowych i ogólnie przyjętego modelu implementacji
 
+*** klient najpierw szuka komputerów w lokalnej sieci, czeka na otrzymanie od nich danych z kluczem,
+następnie odczytuje wiadomość użykownika aplikacji, losuje trasę, szyfruje wiadomość i wysyła ją.
+
+*** serwer.c - implementacja aplikacji serwerów
+serwer nasłuchuje czy nie otrzymał wiadomości, jeśli otrzymał odczytuje jej 4 ostatnie znaki
+(w rzeczywistości znaki od 6 do 2 znaku od końca), są to znaki sterujące i w zależności od ich
+znaczenia serwer wysyła klucz lub odczytuje wiadomość lub przesyła wiadomość dalej
+
+*** route.h - biblioteka zawierająca implementację prostej funkcji losującej trasę
+
+*** encrypt.h - biblioteka zawierająca implementację funkcji szyfrującej (szyfr Cezara)
+
 4. Krótka informacja dotycząca używania klienta i serwera (jak włączyć, jak wyłączyć, jak skompilować, wymagania)
+
+*** Uruchomienie:
+./klient
+./serwer (należy uruchomić kilka serwerów na kilku maszynach dla zaobserwowania działania programu)
+
+*** Kompilacja:
+gcc -Wall klient.c -o klient
+gcc -Wall serwer.c -o serwer
