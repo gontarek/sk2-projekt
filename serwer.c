@@ -37,6 +37,7 @@ int main(int argc, char* argv[])
    stMyAddr.sin_family = AF_INET;
    stMyAddr.sin_addr.s_addr = htonl(INADDR_ANY);
    stMyAddr.sin_port = htons(atoi(argv[1]));
+   //stMyAddr.sin_port = htons(1234);
 
    /* create a socket */
    nSocket = socket(AF_INET, SOCK_DGRAM, 0);
