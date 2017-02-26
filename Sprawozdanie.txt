@@ -2,6 +2,7 @@
 Stupid TOR. Komputery komunikują się w sieci, która za każdym razem wybiera losowo trasę.
 
 2. Opis protokołu komunikacji (np. za pomocą maszyny stanów, czy pseudokodu)
+
 Najpierw klient wysyła wiadomość do serwerów na broadcastie słuchających na porcie 1234
  z zapytaniem, kto jest obecny (znaki sterujące "##") i odczytuje klucze serwerów, które mu odpowiedziały.
  Następnie wiadomość zostaje zaszyfrowana oraz nadpisana adresami kolejnych serwerów i wysłana do pierwszego
