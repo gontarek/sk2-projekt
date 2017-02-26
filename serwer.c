@@ -26,7 +26,7 @@ void read_server_address(char * address, char * bufor) {
   addrLen[1] = bufor[bufLen-2];
   int len = atoi(addrLen);
   for (int i = 0; i < len; i++) {
-    address[i] = bufor[bufLen-4-i];
+    address[i] = bufor[bufLen-3-len+i];
   }
 }
 
@@ -56,6 +56,8 @@ int main(int argc, char* argv[])
    struct sockaddr_in stMyAddr, stClientAddr, stServerAddr;
    char cbBuf[BUF_SIZE]="", intBuf[BUF_SIZE]="", serverPortBuf[5]="";
    char tmpBuf[BUF_SIZE];
+
+   printf("Mój klucz to %d\n", key);
 
    /* address structure */
    memset(&stMyAddr, 0, sizeof(struct sockaddr));

@@ -185,15 +185,15 @@ int main(int argc, char* argv[])
    for (int i = 0; i < servers; i ++) {
      if (i > 0) {
        /* dopisz IP serwera */
-       strcat(cbBuf, addressesList[i]);
+       strcat(cbBuf, addressesList[servers-i]);
        /* dopisz liczbę jego znaków */
-       if (addressesLenghtList[i] < 10) strcat(cbBuf, "0");
+       if (addressesLenghtList[servers-i] < 10) strcat(cbBuf, "0");
        sprintf(intBuf, "%d", addressesLenghtList[i]);
        strcat(cbBuf, intBuf);
      }
      printf("Przed %d szyfrowaniem:\n%s\n", i, cbBuf);
      encrypt(keysList[servers-1-i],cbBuf);
-     printf("Po %d szyfrowaniu:\n%s\n", i, cbBuf);
+     printf("Po %d szyfrowaniu szyfrem %d:\n%s\n", i, keysList[servers-1-i], cbBuf);
      bzero(intBuf, sizeof(intBuf));
    }
    strcat(cbBuf, "\n");
