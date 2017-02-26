@@ -4,7 +4,9 @@ Stupid TOR. Komputery komunikują się w sieci, która za każdym razem wybiera 
 2. Opis protokołu komunikacji (np. za pomocą maszyny stanów, czy pseudokodu)
 Najpierw klient wysyła wiadomość do serwerów na broadcastie słuchających na porcie 1234
  z zapytaniem, kto jest obecny (znaki sterujące "##") i odczytuje klucze serwerów, które mu odpowiedziały.
- Następnie wiadomość zostaje zaszyfrowana. Ostatni serwer rozpoznaje, że jest ostatnim serwerem po znakach
+ Następnie wiadomość zostaje zaszyfrowana oraz nadpisana adresami kolejnych serwerów i wysłana do pierwszego
+ serwera na liście. Kolejne serwery rozszyfrowują wiadomość, odczytują adres kolejnego serwera,
+ usuwają go z wiadomości i przesyłają ją dalej. Ostatni serwer rozpoznaje, że jest ostatnim serwerem po znakach
  sterujących "$$" znajdujących się na końcu wiadomości.
 
 3. Krótki opis plików źródłowych i ogólnie przyjętego modelu implementacji
