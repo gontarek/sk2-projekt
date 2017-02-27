@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
    int nBind, bcBind;
    int nTmp;
    struct sockaddr_in stServerAddr, stMyAddr, stBcAddr;
-   struct hostent* lpstServerEnt, destServerEnt;
+   struct hostent * lpstServerEnt, * destServerEnt;
    char cbBuf[BUF_SIZE], keyBuf[BUF_SIZE], intBuf[BUF_SIZE];
    srand(time(NULL));
    //int ports[] = {1230, 1231, 1232};
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
    /* look up server's IP address */
    destServerEnt = gethostbyname(argv[1]);
    strcpy(destAddress, argv[1]);
-   if (! lpstServerEnt)
+   if (! destServerEnt)
    {
       fprintf(stderr, "%s: Can't get the destination server's IP address.\n", argv[0]);
       exit(1);
@@ -196,7 +196,7 @@ int main(int argc, char* argv[])
        strcat(cbBuf, destAddress);
        /* dopisz liczbę jego znaków */
        if (strlen(destAddress) < 10) strcat(cbBuf, "0");
-       sprintf(intBuf, "%d", strlen(destAddress));
+       sprintf(intBuf, "%lu", strlen(destAddress));
        strcat(cbBuf, intBuf);
      }
      if (i > 0) {
