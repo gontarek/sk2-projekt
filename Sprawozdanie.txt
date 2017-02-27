@@ -27,7 +27,7 @@ znaczenia serwer wysyła klucz lub odczytuje wiadomość lub przesyła wiadomoś
 4. Krótka informacja dotycząca używania klienta i serwera (jak włączyć, jak wyłączyć, jak skompilować, wymagania)
 
 *** Uruchomienie:
-./klient
+./klient adres_serwera_końcowego
 ./serwer (należy uruchomić kilka serwerów na kilku maszynach dla zaobserwowania działania programu)
 
 *** Kompilacja:
