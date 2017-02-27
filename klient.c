@@ -23,13 +23,14 @@ int main(int argc, char* argv[])
    int nBind, bcBind;
    int nTmp;
    struct sockaddr_in stServerAddr, stMyAddr, stBcAddr;
-   struct hostent* lpstServerEnt;
+   struct hostent* lpstServerEnt, destServerEnt;
    char cbBuf[BUF_SIZE], keyBuf[BUF_SIZE], intBuf[BUF_SIZE];
    srand(time(NULL));
    //int ports[] = {1230, 1231, 1232};
    //int keys[] = {0};
    char addresses[MAX_SERVER_NR][INET_ADDRSTRLEN] = {{0}};
    int addressesLenght[MAX_SERVER_NR];
+   char destAddress[INET_ADDRSTRLEN] = "";
    int keys[MAX_SERVER_NR] = {0};
 
    if (argc != 2)
@@ -39,10 +40,11 @@ int main(int argc, char* argv[])
    }
 
    /* look up server's IP address */
-   lpstServerEnt = gethostbyname(argv[1]);
+   destServerEnt = gethostbyname(argv[1]);
+   strcpy(destAddress, argv[1]);
    if (! lpstServerEnt)
    {
-      fprintf(stderr, "%s: Can't get the server's IP address.\n", argv[0]);
+      fprintf(stderr, "%s: Can't get the destination server's IP address.\n", argv[0]);
       exit(1);
    }
 
@@ -134,20 +136,26 @@ int main(int argc, char* argv[])
        nBytes = recvfrom(bcSocket, cbBuf, BUF_SIZE, 0, (struct sockaddr*)&stBcAddr, &nTmp);
        /*jeżeli otrzymano wiadomość */
        if (nBytes != -1) {
-         /* odczytanie otrzymanego klucza */
-         int bufLen = strlen(cbBuf);
-         strcpy(keyBuf, &cbBuf[bufLen-3]);
-         strcat(keyBuf, &cbBuf[bufLen-2]);
-         keys[servers] = atoi(keyBuf);
          /* odczytanie adresu serwera */
          char ipAddress[INET_ADDRSTRLEN];
          inet_ntop(AF_INET, &(stBcAddr.sin_addr), ipAddress, INET_ADDRSTRLEN);
-         strcpy(addresses[servers],ipAddress);
-         addressesLenght[servers] = strlen(ipAddress);
+         /* jeżeli nie jest adresem serwera końcowego */
+         if (strcmp(ipAddress, destAddress) == 0) {
 
-         printf("Klucz: %d, długość adresu: %d, adres: %s\n", keys[servers], addressesLenght[servers], addresses[servers]);
-         printf("%s:: %s", argv[0], cbBuf);
-         servers++;
+             /* odczytanie otrzymanego klucza */
+             int bufLen = strlen(cbBuf);
+             strcpy(keyBuf, &cbBuf[bufLen-3]);
+             strcat(keyBuf, &cbBuf[bufLen-2]);
+             keys[servers] = atoi(keyBuf);
+
+             /* zapisanie adresu serwera */
+             strcpy(addresses[servers],ipAddress);
+             addressesLenght[servers] = strlen(ipAddress);
+
+             printf("Klucz: %d, długość adresu: %d, adres: %s\n", keys[servers], addressesLenght[servers], addresses[servers]);
+             printf("%s:: %s", argv[0], cbBuf);
+             servers++;
+         }
        }
     }
 
@@ -183,6 +191,14 @@ int main(int argc, char* argv[])
 
    /* zaszyfrowanie wiadomości i dopisanie kolejności serwerów */
    for (int i = 0; i < servers; i ++) {
+     if (i == 0) {
+       /* dopisz IP serwera końcowego */
+       strcat(cbBuf, destAddress);
+       /* dopisz liczbę jego znaków */
+       if (strlen(destAddress) < 10) strcat(cbBuf, "0");
+       sprintf(intBuf, "%d", strlen(destAddress));
+       strcat(cbBuf, intBuf);
+     }
      if (i > 0) {
        /* dopisz IP serwera */
        strcat(cbBuf, addressesList[servers-i]);
